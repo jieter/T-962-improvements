@@ -6,18 +6,22 @@ Custom firmware for the cheap T-962 reflow oven utilizing the _existing_ control
  - [Hackaday post]
  - We have [Travis-CI] in place to build pull requests
 
+
 ### Introduction
 
-As we had use for a small reflow oven for a small prototype run we settled for the `T-962` even after having seen the negative reviews of it as there were plenty of suggestions all across the Internet on how it could be improved including replacing the existing controller and display(!). After having had a closer look at the hardware (replacing the masking tape inside with Kapton tape first) it was obvious that there was a simple way to improve the software disaster that is the T-962.
+As we had use for a small reflow oven for a small prototype run we settled for the `T-962` even after having seen the negative reviews of it as there were plenty of suggestions all across the Internet on how it could be improved including replacing the existing controller and display(!).
+After having had a closer look at the hardware (replacing the masking tape inside with Kapton tape first) it was obvious that there was a simple way to improve the software disaster that is the T-962.
 
 
 ### Hardware improvements
 
 Here are a few improvements made to the cheap T-962 reflow oven utilizing the _existing_ controller hardware with only a small, cheap, but very necessary modification. As you have to open the top part of the oven anyway to reflash the software this is a no-brainer fix:
 
+
 #### Replace stinky masking tape
 
 Instructable suggesting [replacing masking tape with kapton tape](http://www.instructables.com/id/T962A-SMD-Reflow-Oven-FixHack/?ALLSTEPS).
+
 
 #### Cold junction compensation
 
@@ -32,11 +36,13 @@ It turns out that both an analog input and at least one generic GPIO pin is avai
 
 As mentioned elsewhere, make sure the protective earth/ground wire from the main input actually makes contact with the back panel of the chassis and also that the back panel makes contact both with the top and bottom halves of the oven!
 
+
 #### System fan PWM control
 
-The system fan is very noisy an can be turned of most of the time. The custom firmware uses spare `ADO` test point to control it.
+The system fan is very noisy an can be turned of most of the time. The custom firmware uses spare `ADO` test point to control it with a simple transitor/FET.
 
 [Wiki: system fan PWM mod](https://github.com/UnifiedEngineering/T-962-improvements/wiki/System-fan-control)
+
 
 ### New firmware
 
@@ -50,17 +56,21 @@ The MCU in this particular oven is an LPC2134/01 with 128kB flash/16kB RAM, stat
 
 wiki: [Flashing firmware]
 
+
 ### Contributing
+
 This is mainly tested on a fairly recent build of the T-962 (smallest version), build time on the back panel states 14.07 which I assume means 2014 July (or less likely week 7 of 2014), success/failure reports from other users are welcome!
 
 This is very much a quick hack to get only the basic functionality needed up and running. Everything in here is released under the GPLv3 license in hopes that it might be interesting for others to improve on this. Feedback is welcome!
 
 Happy hacking!
 
+
 # Acknowledgements
+
 This project is using the C PID Library - Version 1.0.1, GPLv3
- * modified my Matthew Blythe <mblythester@gmail.com> mjblythe.com/hacks
- * originally by Brett Beauregard <br3ttb@gmail.com> brettbeauregard.com
+ * modified my Matthew Blythe <mblythester@gmail.com> http://mjblythe.com/hacks
+ * originally by Brett Beauregard <br3ttb@gmail.com> http://brettbeauregard.com
 
 [wiki]: https://github.com/UnifiedEngineering/T-962-improvements/wiki
 [Travis-CI]: https://travis-ci.org/UnifiedEngineering/T-962-improvements
