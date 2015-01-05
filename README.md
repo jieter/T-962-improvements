@@ -27,7 +27,8 @@ Instructable suggesting [replacing masking tape with kapton tape](http://www.ins
 
 The existing controller makes the assumption that the cold-junction is at 20 degrees Celsius at all times which made keeping a constant temperature "a bit" challenging as the terminal block sits _on_top_of_an_oven_ with two TRIACs nearby.
 We can fix this by adding a temperature sensor to the connector block where the thermocouples are connected to the controller board.
-It turns out that both an analog input and at least one generic GPIO pin is available on unpopulated pads on the board. GPIO0.7 in particular was very convenient for 1-wire operation as there was an adjacent pad with 3.3V so a 4k7 pull-up resistor could be placed there, then a jumper wire is run from GPIO0.7 pad to the `Dq` pin of a cheap [DS18B20] 1-wire temperature sensor that gets epoxied to the terminal block, soldering both `Vcc` and ground pins to the ground plane conveniently located right next to it. Some hot-glue may have to be removed to actually get to the side of the connector and the ground plane, someone seems to have been really trigger-happy with the glue gun!
+It turns out that both an analog input and at least one generic GPIO pin is available on unpopulated pads on the board. `GPIO0.7` in particular was very convenient for 1-wire operation as there was an adjacent pad with 3.3V so a 4k7 pull-up resistor could be placed there, then a jumper wire is run from `GPIO0.7` pad to the `Dq` pin of a cheap [DS18B20] 1-wire temperature sensor that gets epoxied to the terminal block, soldering both `Vcc` and ground pins to the ground plane conveniently located right next to it.
+Some hot-glue may have to be removed to actually get to the side of the connector and the ground plane, someone seems to have been really trigger-happy with the glue gun!
 
 [Wiki: cold junction compensation mod](https://github.com/UnifiedEngineering/T-962-improvements/wiki)
 
@@ -39,20 +40,23 @@ As mentioned elsewhere, make sure the protective earth/ground wire from the main
 
 #### System fan PWM control
 
-The system fan is very noisy an can be turned of most of the time. The custom firmware uses spare `ADO` test point to control it with a simple transitor/FET.
+The system fan is very noisy an can be turned of most of the time. The custom firmware uses spare `ADO` test point to control it with a simple transitor or FET.
 
 [Wiki: system fan PWM mod](https://github.com/UnifiedEngineering/T-962-improvements/wiki/System-fan-control)
 
 
 ### New firmware
 
-The firmware was originally built with LPCXpresso 7.5.0 as I've never dealt with the LPC2000-series NXP microcontrollers before so I just wanted something that wouldn't require TOO much of work to actually produce a flashable image. Philips LPC2000 Flash Utility v2.2.3 was used to flash the controller through the ISP header present on the board.
+The firmware was originally built with LPCXpresso 7.5.0 as I've never dealt with the LPC2000-series NXP microcontrollers before so I just wanted something that wouldn't require TOO much of work to actually produce a flashable image.
+Philips LPC2000 Flash Utility v2.2.3 was used to flash the controller through the ISP header present on the board.
 
-LPCXpresso requires activation but is free for everything but large code sizes (the limit is larger than the 128kB flash size on this controller anyway so it's not really an issue). The flash utility unfortunately only runs on Windows but Flash Magic is an alternative (see Wiki for more flashing instructions).
+LPCXpresso requires activation but is free for everything but large code sizes (the limit is larger than the 128kB flash size on this controller anyway so it's not really an issue).
+The flash utility unfortunately only runs on Windows but Flash Magic is an alternative (see Wiki for more flashing instructions).
 
 With help from the community the project now also builds standalone using the standard `gcc-arm-none-eabi` toolchain, see `COMPILING.md` for more information.
 
-The MCU in this particular oven is an LPC2134/01 with 128kB flash/16kB RAM, stated to be capable of running at up to 60MHz. Unfortunately the PLL in this chip is not that clever so with the supplied XTAL at 11.0592MHz we can only reach 55.296MHz (5x multiplier). Other variants exist, the [Wiki] has more information about this.
+The MCU in this particular oven is an LPC2134/01 with 128kB flash/16kB RAM, stated to be capable of running at up to 60MHz.
+Unfortunately the PLL in this chip is not that clever so with the supplied XTAL at 11.0592MHz we can only reach 55.296MHz (5x multiplier). Other variants exist, the [Wiki] has more information about this.
 
 wiki: [Flashing firmware]
 
